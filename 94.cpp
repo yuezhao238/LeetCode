@@ -14,11 +14,26 @@ struct TreeNode {
 class Solution {
 public:
     vector<int> res;
+    // vector<int> inorderTraversal(TreeNode* root) {
+    //     if (root == nullptr) return res;
+    //     inorderTraversal(root->left);
+    //     res.push_back(root->val);
+    //     inorderTraversal(root->right);
+    //     return res;
+    // }
+
     vector<int> inorderTraversal(TreeNode* root) {
-        if (root == nullptr) return res;
-        inorderTraversal(root->left);
-        res.push_back(root->val);
-        inorderTraversal(root->right);
+        stack<TreeNode*> stk;
+        while (!stk.empty() || root != nullptr) {
+            while (root) {
+                stk.push(root);
+                root = root->left;
+            }
+            root = stk.top();
+            res.push_back(root->val);
+            stk.pop();
+            root = root->right;
+        }
         return res;
     }
 };
